@@ -1,0 +1,28 @@
+{
+  "ORGANISATIE": {
+    "SECTOR": [
+      "Administratief / call center",
+      "Agrarisch / Visserij",
+      "Arbeidsbemiddeling",
+      "Beveiliging / Brandweer / Politie",
+      "Bouw",
+      "Cultuur / Recreatie",
+      "Facilitair / Schoonmaak",
+      "Financieel / Verzekeringen",
+      "Gezondheidszorg / Welzijn",
+      "Handel",
+      "Horeca",
+      "ICT",
+      "Industrie / Techniek",
+      "Logistiek",
+      "Media / Communicatie",
+      "Nutsvoorzieningen",
+      "Onderwijs / Onderzoek",
+      "Overheid / Non-profit",
+      "Persoonlijke dienstverlening",
+      "Pharma / Chemie",
+      "Zakelijke dienstverlening",
+      "Overig / Onbekend"
+    ]
+  }
+}
