@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { toJSON, updateRecord } = require("./plugins");
+const mongoose = require('mongoose');
+const { toJSON, updateRecord } = require('./plugins');
 
 module.exports = (connection, collectionName) => {
   const schemaFields = {
@@ -18,6 +18,28 @@ module.exports = (connection, collectionName) => {
     auth0Id: {
       type: String,
     },
+    profile_picture: {
+      type: String,
+    },
+    profile_picture_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: global.collections.DOCUMENT,
+    },
+    is_online: { type: Boolean, default: false },
+    last_seen: { type: Number },
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: global.collections.ROLE,
+    },
+    created_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: global.collections.USER,
+    },
+    updated_by: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: global.collections.USER,
+    },
+    /** If you are using auth0 then remove below fields */
     password: {
       type: String,
     },
@@ -34,25 +56,6 @@ module.exports = (connection, collectionName) => {
     registered_date: {
       type: Date,
       default: Date.now,
-    },
-    profile_picture: {
-      type: String,
-    },
-    profile_picture_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: global.collections.DOCUMENT,
-    },
-    role: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: global.collections.ROLE,
-    },
-    created_by: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: global.collections.USER,
-    },
-    updated_by: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: global.collections.USER,
     },
   };
 

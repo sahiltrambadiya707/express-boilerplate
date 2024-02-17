@@ -1,7 +1,7 @@
-const httpStatus = require("http-status");
-const catchAsync = require("@utils/catchAsync");
-const { chatService } = require("@services/index");
-const { createResponseObject } = require("@utils/utils");
+const httpStatus = require('http-status');
+const catchAsync = require('@utils/catchAsync');
+const { chatService } = require('@services/index');
+const { createResponseObject } = require('@utils/utils');
 
 const accessConversation = catchAsync(async (req, res) => {
   const chatDoc = await chatService.accessConversation({
@@ -12,12 +12,9 @@ const accessConversation = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "",
+    message: '',
     payload: {
-      result: {
-        status: httpStatus["200_NAME"],
-      },
-      data: chatDoc,
+      result: chatDoc,
     },
   };
 
@@ -33,12 +30,9 @@ const fetchConversations = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "",
+    message: '',
     payload: {
-      result: {
-        status: httpStatus["200_NAME"],
-      },
-      data: chatDoc,
+      result: chatDoc,
     },
   };
 
@@ -54,12 +48,9 @@ const fetchConversationById = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "",
+    message: '',
     payload: {
-      result: {
-        status: httpStatus["200_NAME"],
-      },
-      data: chatDoc,
+      result: chatDoc,
     },
   };
 
@@ -70,17 +61,15 @@ const allMessages = catchAsync(async (req, res) => {
   const chatDoc = await chatService.allMessages({
     user: req.user,
     query: req.query,
+    body: req.body,
   });
 
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "",
+    message: '',
     payload: {
-      result: {
-        status: httpStatus["200_NAME"],
-      },
-      data: chatDoc,
+      result: chatDoc,
     },
   };
 
@@ -96,12 +85,9 @@ const saveMessage = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "",
+    message: '',
     payload: {
-      result: {
-        status: httpStatus["200_NAME"],
-      },
-      data: chatDoc,
+      result: chatDoc,
     },
   };
 

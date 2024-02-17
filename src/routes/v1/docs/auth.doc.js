@@ -59,37 +59,4 @@ module.exports = {
       },
     },
   },
-  '/auth/testAPI': {
-    post: {
-      tags: ['Auth'],
-      summary: 'Test decrypted data',
-      requestBody: {
-        description: '$DESCRIPTION',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                payload: {
-                  type: 'string',
-                  example: 'Encrypted string',
-                },
-              },
-            },
-          },
-        },
-      },
-      responses: {
-        200: {
-          content: {
-            'application/json': {
-              schema: {
-                type: 'object',
-              },
-            },
-          },
-        },
-      },
-    },
-  },
 };

@@ -1,13 +1,13 @@
-const crypto = require("crypto");
-const path = require("path");
+const crypto = require('crypto');
+const path = require('path');
+const configuration = require('@config/configuration');
+const { s3CreateFolder, s3UploadFile, s3DeleteObject, s3CopyFile } = require('./s3FileManager');
+const { makeFoldersToLocalDisk, copyFileToLocalDisk, uploadFileToLocalDisk } = require('./localFileManager');
 
-const { s3CreateFolder, s3UploadFile, s3DeleteObject, s3CopyFile } = require("./s3FileManager");
-const { makeFoldersToLocalDisk, copyFileToLocalDisk, uploadFileToLocalDisk } = require("./localFileManager");
-
-const storageType = global.env.STORAGE_TYPE;
+const storageType = configuration.STORAGE_TYPE;
 
 const fileTypesRegex = {
-  image: "\\.(png|jpg|jpeg)$",
+  image: '\\.(png|jpg|jpeg)$',
 };
 
 function getFileTypeRegex(filetype) {
@@ -28,7 +28,7 @@ function getUniqueName() {
 }
 
 function makeFolders(dirPath) {
-  if (storageType === "s3") {
+  if (storageType === 's3') {
     s3CreateFolder({ dirPath });
   } else {
     makeFoldersToLocalDisk({ dirPath });
@@ -38,8 +38,8 @@ function makeFolders(dirPath) {
 function validateFile({
   fileToBeValidated,
   maxAllowedFileSizeInMB = 5,
-  allowedFileType = "png|jpeg|jpg",
-  validationFieldName = "File",
+  allowedFileType = 'png|jpeg|jpg',
+  validationFieldName = 'File',
 }) {
   if (fileToBeValidated) {
     const fileSizeLimit = maxAllowedFileSizeInMB * 1000000;
@@ -48,18 +48,18 @@ function validateFile({
     const fileTypeRegex = getFileTypeRegex(allowedFileType);
 
     let fileExtension = path.extname(fileToBeValidated.name);
-    fileExtension = fileExtension ? fileExtension.toLowerCase() : "";
+    fileExtension = fileExtension ? fileExtension.toLowerCase() : '';
 
     if (!RegExp(fileTypeRegex).test(fileExtension)) {
       const regex = String(fileTypeRegex);
       const extensions = regex
-        .substring(regex.indexOf("(") + 1, regex.lastIndexOf(")"))
-        .split("|")
-        .join(", ");
+        .substring(regex.indexOf('(') + 1, regex.lastIndexOf(')'))
+        .split('|')
+        .join(', ');
 
       return {
         status: false,
-        type: "invalid_extension",
+        type: 'invalid_extension',
         message: `Invalid Extension. Only ${extensions} are allowed`,
       };
     }
@@ -68,7 +68,7 @@ function validateFile({
     if (fileToBeValidated.size > fileSizeLimit) {
       return {
         status: false,
-        type: "size_limit_exceeded",
+        type: 'size_limit_exceeded',
         message: `${validationFieldName} size must be less than ${maxAllowedFileSizeInMB} MB`,
       };
     }
@@ -80,7 +80,7 @@ function validateFile({
   } 
     return {
       status: false,
-      type: "not_found",
+      type: 'not_found',
       message: `${validationFieldName} is required`,
     };
   
@@ -89,10 +89,11 @@ function validateFile({
 async function validateAndUploadFile({
   fileToUpload,
   uploadPath,
-  fileName = "",
+  fileName = '',
   maxAllowedFileSizeInMB = 5,
-  allowedFileType = "png|jpeg",
-  validationFieldName = "File",
+  allowedFileType = 'png|jpeg',
+  validationFieldName = 'File',
+  bucketName,
 }) {
   if (fileToUpload) {
     const fileSizeLimit = maxAllowedFileSizeInMB * 1000000;
@@ -110,13 +111,13 @@ async function validateAndUploadFile({
     if (!RegExp(fileTypeRegex).test(fileName)) {
       const regex = String(fileTypeRegex);
       const extensions = regex
-        .substring(regex.indexOf("(") + 1, regex.lastIndexOf(")"))
-        .split("|")
-        .join(", ");
+        .substring(regex.indexOf('(') + 1, regex.lastIndexOf(')'))
+        .split('|')
+        .join(', ');
 
       return {
         status: false,
-        type: "Invalid extension",
+        type: 'Invalid extension',
         message: `Invalid Extension. Only ${extensions} are allowed`,
       };
     }
@@ -125,26 +126,26 @@ async function validateAndUploadFile({
     if (fileToUpload.size > fileSizeLimit) {
       return {
         status: false,
-        type: "Size limit exceeded",
+        type: 'Size limit exceeded',
         message: `${validationFieldName} size must be less than ${maxAllowedFileSizeInMB} MB`,
       };
     }
 
-    if (storageType === "s3") {
-      return s3UploadFile({ fileToUpload, uploadPath, fileName, validationFieldName });
+    if (storageType === 's3') {
+      return s3UploadFile({ fileToUpload, uploadPath, fileName, validationFieldName, bucketName });
     } 
       return uploadFileToLocalDisk({ fileToUpload, uploadPath, fileName, validationFieldName });
     
   } 
     return {
       status: false,
-      type: "File not found",
+      type: 'File not found',
       message: `${validationFieldName} is required`,
     };
   
 }
 
-async function uploadPreValidatedFile({ fileToUpload, uploadPath, fileName = "", fieldName = "File" }) {
+async function uploadPreValidatedFile({ fileToUpload, uploadPath, fileName = '', fieldName = 'File', bucketName }) {
   if (fileToUpload) {
     // creating file name if not specified
     if (!fileName) {
@@ -153,31 +154,31 @@ async function uploadPreValidatedFile({ fileToUpload, uploadPath, fileName = "",
 
     fileName = fileName.toLowerCase();
 
-    if (storageType === "s3") {
-      return s3UploadFile({ fileToUpload, uploadPath, fileName });
+    if (storageType === 's3') {
+      return s3UploadFile({ fileToUpload, uploadPath, fileName, bucketName });
     } 
       return uploadFileToLocalDisk({ fileToUpload, uploadPath, fileName });
     
   } 
     return {
       status: false,
-      type: "not_found",
+      type: 'not_found',
       message: `${fieldName} is required`,
     };
   
 }
 
-async function deleteFileOrFolder({ filePath }) {
-  if (storageType === "s3") {
-    s3DeleteObject({ filePath });
+async function deleteFileOrFolder({ filePath, bucketName }) {
+  if (storageType === 's3') {
+    s3DeleteObject({ filePath, bucketName });
   } else {
     deleteFileOrFolderToLocalDisk({ filePath });
   }
 }
 
-function copyFileLocally({ sourcePath, destinationPath }) {
-  if (storageType === "s3") {
-    return s3CopyFile({ sourcePath, destinationPath });
+function copyFileLocally({ sourcePath, destinationPath, bucketName }) {
+  if (storageType === 's3') {
+    return s3CopyFile({ sourcePath, destinationPath, bucketName });
   } 
     return copyFileToLocalDisk({ sourcePath, destinationPath });
   

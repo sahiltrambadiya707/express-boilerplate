@@ -8,13 +8,13 @@ const router = express.Router();
 router.get(
   '/byRole/:role',
   auth(),
-  //   checkPermission([{ module: systemModules.module, permission: "can_select" }]),
+  // checkPermission([{ module: systemModules.module, permission: 'can_select' }]),
   fieldRestrictionController.retrieveFieldRestrictionsByRole,
 );
 router.get(
   '/:id',
   auth(),
-  //   checkPermission([{ module: systemModules.module, permission: "can_read" }]),
+  // checkPermission([{ module: systemModules.module, permission: 'can_read' }]),
   fieldRestrictionController.retrieveFieldRestrictionById,
 );
 
@@ -26,7 +26,7 @@ router.get(
 router.patch(
   '/:id',
   auth(),
-  //   checkPermission([{ module: systemModules.module, permission: "can_update" }]),
+  // checkPermission([{ module: systemModules.module, permission: 'can_update' }]),
   fieldRestrictionController.updateFieldRestriction,
 );
 

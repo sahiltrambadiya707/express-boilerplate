@@ -1,7 +1,7 @@
-const httpStatus = require("http-status");
-const catchAsync = require("@utils/catchAsync");
-const { traditionalAuthService } = require("@services/index");
-const { createResponseObject } = require("@utils/utils");
+const httpStatus = require('http-status');
+const catchAsync = require('@utils/catchAsync');
+const { traditionalAuthService } = require('@services/index');
+const { createResponseObject } = require('@utils/utils');
 
 const register = catchAsync(async (req, res) => {
   const userDoc = await traditionalAuthService.register({
@@ -11,7 +11,7 @@ const register = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "a_verification_mail_has_been_sent_successfully",
+    message: 'a_verification_mail_has_been_sent_successfully',
     payload: { result: userDoc },
   };
 
@@ -26,7 +26,7 @@ const activate = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "the_account_has_been_verified_successfully",
+    message: 'the_account_has_been_verified_successfully',
     payload: {
       result: userDoc,
     },
@@ -43,7 +43,7 @@ const resend = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "a_password_reset_mail_has_been_sent_successfully",
+    message: 'a_password_reset_mail_has_been_sent_successfully',
     payload: {
       result: userDoc,
     },
@@ -60,7 +60,7 @@ const login = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "login_successful",
+    message: 'login_successful',
     payload: {
       result: userDoc,
     },
@@ -77,7 +77,7 @@ const forgot = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "a_password_reset_mail_has_been_sent_successfully",
+    message: 'a_password_reset_mail_has_been_sent_successfully',
     payload: {
       result: userDoc,
     },
@@ -95,7 +95,7 @@ const passwordReset = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "your_password_has_been_updated",
+    message: 'your_password_has_been_updated',
     payload: {
       result: userDoc,
     },

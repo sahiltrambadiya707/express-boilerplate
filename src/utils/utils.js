@@ -1,6 +1,7 @@
+const { createClient } = require('redis');
 const isEmpty = require('lodash/isEmpty');
-
 const { AsyncLocalStorage } = require('async_hooks');
+const logger = require('../config/logger');
 
 const als = new AsyncLocalStorage();
 
@@ -215,6 +216,20 @@ function separateTrueFalseFromObject(obj) {
   // const { trueObj: separatedTrue, falseObj: separatedFalse } = separateTrueFalseFromObject(schema);
 }
 
+const connectRedisClient = async () => {
+  global.redisClient = createClient();
+
+  global.redisClient.on('connect', () => {
+    logger.info('Redis Connected');
+  });
+
+  global.redisClient.on('error', (err) => {
+    logger.error('Error connecting to Redis:', err);
+  });
+
+  await global.redisClient.connect();
+};
+
 module.exports = {
   createNestedObject,
   createResponseObject,
@@ -228,4 +243,5 @@ module.exports = {
   dataUnflattering,
   createFieldRestrictionSchema,
   separateTrueFalseFromObject,
+  connectRedisClient,
 };

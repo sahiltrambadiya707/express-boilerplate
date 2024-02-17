@@ -1,7 +1,7 @@
-const httpStatus = require("http-status");
-const catchAsync = require("@utils/catchAsync");
-const { roleService } = require("@services/index");
-const { createResponseObject } = require("@utils/utils");
+const httpStatus = require('http-status');
+const catchAsync = require('@utils/catchAsync');
+const { roleService } = require('@services/index');
+const { createResponseObject } = require('@utils/utils');
 
 const getRoles = catchAsync(async (req, res) => {
   const roles = await roleService.getRoles({ user: req.user, query: req.query });
@@ -9,7 +9,7 @@ const getRoles = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "roles_were_successfully_retrieved",
+    message: 'roles_were_successfully_retrieved',
     payload: { return: roles },
   };
 
@@ -22,7 +22,7 @@ const addRole = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "the_role_has_been_created_successfully",
+    message: 'the_role_has_been_created_successfully',
     payload: { result: roleDoc },
   };
 
@@ -35,7 +35,7 @@ const updateRole = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "the_role_has_been_successfully_modified",
+    message: 'the_role_has_been_successfully_modified',
     payload: { result: roleDoc },
   };
 
@@ -48,7 +48,7 @@ const deleteRole = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "the_role_was_successfully_deleted",
+    message: 'the_role_was_successfully_deleted',
     payload: {
       result: roleDoc,
     },
@@ -63,7 +63,7 @@ const getRole = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "role_data_were_successfully_retrieved",
+    message: 'role_data_were_successfully_retrieved',
     payload: { result: roleDoc },
   };
 

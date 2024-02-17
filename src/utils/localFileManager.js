@@ -1,14 +1,14 @@
-const fs = require("fs");
-const path = require("path");
-const logger = require("@config/logger");
+const fs = require('fs');
+const path = require('path');
+const logger = require('../config/logger');
 
 async function ensureFileExists(filePath, defaultContent = '[]') {
   try {
-      await fs.promises.access(filePath, fs.constants.F_OK);
-      console.log(`File exists: ${filePath}`);
+    await fs.promises.access(filePath, fs.constants.F_OK);
+    console.log(`File exists: ${filePath}`);
   } catch (err) {
-      console.log(`File does not exist, creating: ${filePath}`);
-      await fs.promises.writeFile(filePath, defaultContent);
+    console.log(`File does not exist, creating: ${filePath}`);
+    await fs.promises.writeFile(filePath, defaultContent);
   }
 }
 
@@ -18,14 +18,14 @@ function makeFoldersToLocalDisk({ dirPath }) {
   }
 }
 
-async function uploadFileToLocalDisk({ fileToUpload, uploadPath, fileName = "", validationFieldName = "File" }) {
+async function uploadFileToLocalDisk({ fileToUpload, uploadPath, fileName = '', validationFieldName = 'File' }) {
   return new Promise((resolve) => {
     fileToUpload.mv(`${uploadPath}/${fileName}`, (err) => {
       if (err) {
         resolve({
           status: false,
-          type: "Something went wrong",
-          message: "Something went wrong while uploading file",
+          type: 'Something went wrong',
+          message: 'Something went wrong while uploading file',
         });
         return;
       }
@@ -63,13 +63,13 @@ function copyFileToLocalDisk({ sourcePath, destinationPath }) {
     try {
       fs.copyFile(sourcePath, destinationPath, (err) => {
         if (err) {
-          reject("Something went wrong while copying file");
+          reject(err);
         } else {
-          resolve("File deleted successfully");
+          resolve('File deleted successfully');
         }
       });
     } catch (error) {
-      reject("Something went wrong while copying file");
+      reject(error);
     }
   });
 }
@@ -79,5 +79,5 @@ module.exports = {
   uploadFileToLocalDisk,
   deleteFileOrFolderToLocalDisk,
   copyFileToLocalDisk,
-  ensureFileExists
+  ensureFileExists,
 };

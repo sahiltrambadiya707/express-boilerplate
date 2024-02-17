@@ -1,7 +1,7 @@
-const httpStatus = require("http-status");
-const catchAsync = require("@utils/catchAsync");
-const { fieldRestrictionService } = require("@services/index");
-const { createResponseObject } = require("@utils/utils");
+const httpStatus = require('http-status');
+const catchAsync = require('@utils/catchAsync');
+const { fieldRestrictionService } = require('@services/index');
+const { createResponseObject } = require('@utils/utils');
 
 const retrieveFieldRestrictionsByRole = catchAsync(async (req, res) => {
   const fieldRestrictionDoc = await fieldRestrictionService.retrieveFieldRestrictionsByRole({
@@ -13,10 +13,10 @@ const retrieveFieldRestrictionsByRole = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "field_restriction_retrieval_successful",
+    message: 'field_restriction_retrieval_successful',
     payload: {
       result: {
-        status: httpStatus["200_NAME"],
+        status: httpStatus['200_NAME'],
       },
       ...fieldRestrictionDoc,
     },
@@ -34,10 +34,10 @@ const retrieveFieldRestrictionById = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "field_restring_details_retrieve_successful",
+    message: 'field_restring_details_retrieve_successful',
     payload: {
       result: {
-        status: httpStatus["200_NAME"],
+        status: httpStatus['200_NAME'],
       },
       data: fieldRestrictionDoc,
     },
@@ -56,10 +56,10 @@ const updateFieldRestriction = catchAsync(async (req, res) => {
   const data4responseObject = {
     req,
     code: httpStatus.OK,
-    message: "field_restriction_has_been_updated",
+    message: 'field_restriction_has_been_updated',
     payload: {
       result: {
-        status: httpStatus["200_NAME"],
+        status: httpStatus['200_NAME'],
       },
       data: fieldRestrictionDoc,
     },

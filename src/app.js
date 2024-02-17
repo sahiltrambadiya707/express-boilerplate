@@ -8,9 +8,11 @@ const initDataBase = require('./db/database');
 const initMiddleware = require('./middlewares/middleware');
 const initRouter = require('./routes/v1/index');
 const logger = require('./config/logger');
+const initChat = require('./socket/chat');
 
 global.models = {};
 global.collections = {};
+global.redisClient = {};
 
 const runServer = async () => {
   const app = express();
@@ -38,6 +40,7 @@ const runServer = async () => {
     APP_RELEASE: ${global.env.APP_RELEASE}
     APP_VERSION: ${global.env.APP_VERSION}`);
 
+  // connectRedisClient();
   initMiddleware(app, logger);
   initRouter(app, logger);
 
@@ -46,6 +49,7 @@ const runServer = async () => {
   server.listen(global.env.PORT, () => {
     logger.info(`${global.env.APP_RELEASE} server STARTED on port: ${global.env.PORT}\n`);
   });
+  initChat(server);
 
   server.timeout = 120000;
 

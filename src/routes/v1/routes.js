@@ -11,9 +11,6 @@ function registerRoutes(sRouter, routes, currentPath = '') {
     const routePath = currentPath + route.path;
 
     sRouter.use(routePath, route.route);
-    if (route.children) {
-      registerRoutes(sRouter, route.children, routePath);
-    }
   });
 }
 
@@ -34,16 +31,6 @@ const defaultRoutes = [
     path: '/user',
     route: userRoutes,
   },
-  // {
-  //   path: "/user_organisatie",
-  //   route: user_organisatieRoutes,
-  //   children: [
-  //     {
-  //       path: "/vestiging",
-  //       route: vestigingRoutes.userRouter,
-  //     },
-  //   ],
-  // },
 ];
 
 registerRoutes(router, defaultRoutes);

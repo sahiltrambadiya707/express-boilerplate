@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 module.exports = (connection, collectionName) => {
   const schemaFields = {
@@ -9,6 +9,10 @@ module.exports = (connection, collectionName) => {
     parent_message: { type: String },
     is_replayed: { type: Boolean },
     is_read: { type: Boolean, default: false },
+    is_deleted: { type: Boolean, default: false },
+    is_edited: { type: Boolean, default: false },
+    edited_at: { type: Number },
+    deleted_at: { type: Number },
     date: {
       type: Number,
       default: Date.now,

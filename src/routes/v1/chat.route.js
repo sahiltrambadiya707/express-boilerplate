@@ -1,21 +1,24 @@
-const express = require("express");
-const validate = require("@middlewares/validate");
-const auth = require("@middlewares/auth");
-// const systemModules = require("@config/systemModules");
-// const checkPermission = require("@middlewares/checkPermission");
-const chatController = require("@controllers/chat.controller");
+const express = require('express');
+const auth = require('@middlewares/auth');
+const systemModules = require('@config/systemModules');
+const checkPermission = require('@middlewares/checkPermission');
+const chatController = require('@controllers/chat.controller');
 
 const router = express.Router();
 
 /** Get */
-router.get("/messages", auth(), chatController.allMessages);
+router.get(
+  '/messages',
+  auth(),
+  checkPermission([{ module: systemModules.CHAT, permission: 'can_read' }]),
+  chatController.allMessages,
+);
 
 /** Post */
 router.post(
-  "/",
+  '/',
   auth(),
-  //   checkPermission([{ module: systemModules.module, permission: "can_permission" }]),
-  //   validate(chatValidation.resources),
+  checkPermission([{ module: systemModules.CHAT, permission: 'can_add' }]),
   chatController.accessConversation,
 );
 /** Put */

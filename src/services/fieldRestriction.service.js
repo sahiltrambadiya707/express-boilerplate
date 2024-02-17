@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
 const ApiError = require('@utils/ApiError');
-const { toDotNotation } = require('@utils/utils');
-const { separateTrueFalseFromObject } = require('@utils/utils');
+const { toDotNotation, separateTrueFalseFromObject } = require('@utils/utils');
 
 const retrieveFieldRestrictionsByRole = async ({ query, params }) => {
   const { role } = params;
