@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "express-mongo-boilerplate",
   "version": "0.1.0",
   "description": "Create a Node.js app for building production-ready RESTful APIs using Express, by running one command",
   "main": "src/index.js",
@@ -24,19 +24,6 @@
       "prettier — write",
       "git add"
     ]
-  },
-  "_moduleAliases": {
-    "@root": ".",
-    "@src": "./src",
-    "@config": "./src/config",
-    "@controllers": "./src/controllers",
-    "@db": "./src/db",
-    "@middlewares": "./src/middlewares",
-    "@models": "./src/models",
-    "@routes": "./src/routes",
-    "@services": "./src/services",
-    "@utils": "./src/utils",
-    "@validations": "./src/validations"
   },
   "keywords": [
     "node",
@@ -123,5 +110,14 @@
     "lint-staged": "^15.2.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahiltrambadiya707/express-boilerplate.git"
+  },
+  "author": "Sahil",
+  "bugs": {
+    "url": "https://github.com/sahiltrambadiya707/express-boilerplate/issues"
+  },
+  "homepage": "https://github.com/sahiltrambadiya707/express-boilerplate#readme"
 }
